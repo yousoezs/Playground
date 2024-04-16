@@ -10,4 +10,8 @@
     <Folder Include="Repository\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Domain\ASPNET.Domain.Commons\ASPNET.Domain.Commons.csproj" />
+  </ItemGroup>
+
 </Project>
