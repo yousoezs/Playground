@@ -1,6 +1,6 @@
 namespace ASPNET.User.Testing
 {
-    public class UnitTest1
+    public class UserRepository_Test
     {
         [Fact]
         public void Test1()
