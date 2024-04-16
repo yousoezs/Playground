@@ -1,4 +1,5 @@
 ﻿using ASPNET.Domain.Commons.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace ASPNET.Product.DataAccess.Model
 
         public string? Description { get; set; } = string.Empty;
 
+        [Precision(38, 2)]
         public decimal Price { get; set; } = decimal.Zero;
     }
 }

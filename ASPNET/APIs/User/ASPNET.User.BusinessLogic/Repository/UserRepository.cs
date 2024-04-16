@@ -1,13 +1,7 @@
-﻿using ASPNET.Domain.Commons.Abstraction;
-using ASPNET.Domain.Commons.Interface;
-using ASPNET.Domain.Commons.Record;
+﻿using ASPNET.Domain.Commons.Record;
+using ASPNET.Service.Database.Abstraction;
 using ASPNET.User.DataAccess.Context;
 using ASPNET.User.DataAccess.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ASPNET.User.BusinessLogic.Repository
 {
@@ -21,7 +15,7 @@ namespace ASPNET.User.BusinessLogic.Repository
 
         public override async Task<ServiceResponse<UserModel>> AddEntity(UserModel entity)
         {
-            Task.Delay(100);
+            await Task.Delay(100);
             if(entity is null)
                 return new ServiceResponse<UserModel>(entity, false, "UserModel is null");
 

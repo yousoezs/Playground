@@ -85,7 +85,7 @@ services:
 
   aspnet.product.db:
     container_name: productdb
-    image: mongo:latest
+    image: mcr.microsoft.com/mssql/server:2019-latest
     networks:
       - productNetwork
     ports:

@@ -1,14 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ASPNET.Domain.Commons.Interface;
+using ASPNET.Order.DataAccess.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace ASPNET.Order.DataAccess.Context
 {
     public class OrderContext : DbContext
     {
+        public DbSet<OrderModel> Orders { get; set; }
         public OrderContext(DbContextOptions<OrderContext> options) : base(options)
         {
 

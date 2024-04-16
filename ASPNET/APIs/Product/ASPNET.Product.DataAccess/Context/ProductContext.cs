@@ -1,4 +1,5 @@
-﻿using ASPNET.Product.DataAccess.Model;
+﻿using ASPNET.Domain.Commons.Interface;
+using ASPNET.Product.DataAccess.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

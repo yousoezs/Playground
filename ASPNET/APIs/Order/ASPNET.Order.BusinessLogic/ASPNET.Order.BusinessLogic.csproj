@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Domain\ASPNET.Domain.Commons\ASPNET.Domain.Commons.csproj" />
+    <ProjectReference Include="..\..\..\Domain\ASPNET.Service.Database\ASPNET.Service.Database.csproj" />
   </ItemGroup>
 
 </Project>

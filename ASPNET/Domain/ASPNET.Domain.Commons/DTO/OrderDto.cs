@@ -10,12 +10,11 @@ namespace ASPNET.Domain.Commons.DTO
     public class OrderDto : IOrder
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public UserDto? UserId { get; set; }
+        public Guid UserId { get; set; }
 
-        public ProductDto? ProductId { get; set; }
+        public Guid ProductId { get; set; }
 
         public int Quantity { get; set; }
-
         public decimal TotalPrice { get; set; }
 
     }

@@ -15,11 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Domain\ASPNET.Domain.Commons\ASPNET.Domain.Commons.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\ASPNET.Domain.Commons\ASPNET.Domain.Commons.csproj" />
   </ItemGroup>
 
 </Project>
