@@ -19,9 +19,13 @@ namespace ASPNET.User.BusinessLogic.Repository
             
         }
 
-        public override Task<ServiceResponse<UserModel>> AddEntity(UserModel entity)
+        public override async Task<ServiceResponse<UserModel>> AddEntity(UserModel entity)
         {
-            throw new NotImplementedException();
+            Task.Delay(100);
+            if(entity is null)
+                return new ServiceResponse<UserModel>(entity, false, "UserModel is null");
+
+            return new ServiceResponse<UserModel>(entity, true, "UserModel is added successfully");
         }
 
         public override Task<ServiceResponse<UserModel>> DeleteEntity(Guid id)

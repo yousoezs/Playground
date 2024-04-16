@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ASPNET.Product.DataAccess.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace ASPNET.Product.DataAccess.Context
 {
     public class ProductContext : DbContext
     {
+        public DbSet<ProductModel> Products { get; set; }
         public ProductContext(DbContextOptions<ProductContext> options) : base(options)
         {
 
