@@ -105,6 +105,21 @@ namespace ASPNET.User.Testing
             UserContext dbContext = await CreateShopContextWithInMemoryDbAsync();
             UserModel user = dbContext.Users.First();
 
+            user.Name = "Gegosh";
+            user.Email = "NewMail@mail.com";
+            user.Phone = "070 070 05 08";
+
+            // Act
+            var response = await _instance._userRepository.UpdateEntity(user);
+            if(response.IsSuccess)
+            {
+                dbContext.Update(user);
+                await dbContext.SaveChangesAsync();
+            }
+
+            // Assert
+            Assert.Equal(user, dbContext.Users.First());
+            Assert.True(response.IsSuccess);
         }
     }
 }
