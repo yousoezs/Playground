@@ -4,10 +4,10 @@ namespace ASPNET.Domain.Commons.Interface
 {
     public interface IGenericRepository<TEntity, TId> where TEntity : IEntity<TId>
     {
-        Task<ServiceResponse<TEntity>> AddEntity(TEntity entity);
-        Task<ServiceResponse<TEntity>> UpdateEntity(TEntity entity);
-        Task<ServiceResponse<TEntity>> DeleteEntity(TId id);
-        Task<ServiceResponse<TEntity>> GetEntity(TId id);
-        Task<ServiceResponse<IEnumerable<TEntity>>> GetAllEntities();
+        ValueTask<ServiceResponse<TEntity>> AddEntity(TEntity entity);
+        ValueTask<ServiceResponse<TEntity>> UpdateEntity(TEntity entity);
+        ValueTask<ServiceResponse<TEntity>> DeleteEntity(TId id);
+        ValueTask<ServiceResponse<TEntity>> GetEntity(TId id);
+        ValueTask<ServiceResponse<IEnumerable<TEntity>>> GetAllEntities();
     }
 }

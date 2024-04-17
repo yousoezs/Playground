@@ -8,20 +8,19 @@ namespace ASPNET.User.BusinessLogic.Repository
 {
     public class UserRepository : GenericRepository<UserContext, UserModel, Guid>
     {
-        
         public UserRepository(UserContext dbContext) : base(dbContext) {}
 
-        public override async Task<ServiceResponse<UserModel>> AddEntity(UserModel entity)
+        public override async ValueTask<ServiceResponse<UserModel>> AddEntity(UserModel entity)
         {
             if(entity is null)
-                return new ServiceResponse<UserModel>(entity, false, "UserModel is null");
+                return await Task.FromResult(new ServiceResponse<UserModel>(entity, false, "UserModel is null"));
 
-            dbContext.Users.Add(entity);
+            await dbContext.Users.AddAsync(entity);
 
-            return new ServiceResponse<UserModel>(entity, true, "UserModel is added successfully");
+            return await Task.FromResult(new ServiceResponse<UserModel>(entity, true, "UserModel is added successfully"));
         }
 
-        public override async Task<ServiceResponse<UserModel>> DeleteEntity(Guid id)
+        public override async ValueTask<ServiceResponse<UserModel>> DeleteEntity(Guid id)
         {
            if(id.Equals(Guid.Empty))
                 return new ServiceResponse<UserModel>(null, false, "Id is empty");
@@ -29,26 +28,42 @@ namespace ASPNET.User.BusinessLogic.Repository
             UserModel entity = await dbContext.Users.FindAsync(id);
 
             if(entity is null)
-                return new ServiceResponse<UserModel>(null, false, "UserModel is not found");
+                return await Task.FromResult( new ServiceResponse<UserModel>(null, false, "UserModel is not found"));
 
             dbContext.Users.Remove(entity);
 
             return new ServiceResponse<UserModel>(entity, true, "UserModel is deleted successfully");
         }
 
-        public override async Task<ServiceResponse<IEnumerable<UserModel>>> GetAllEntities()
+        public override async ValueTask<ServiceResponse<IEnumerable<UserModel>>> GetAllEntities()
         {
             return new ServiceResponse<IEnumerable<UserModel>>(await dbContext.Users.ToListAsync(), true, "UserModels are fetched successfully");
         }
 
-        public override Task<ServiceResponse<UserModel>> GetEntity(Guid id)
+        public override async ValueTask<ServiceResponse<UserModel>> GetEntity(Guid id)
         {
-            throw new NotImplementedException();
+            return await dbContext.Users.FindAsync(id) is UserModel entity
+                ? new ServiceResponse<UserModel>(entity, true, "UserModel is fetched successfully")
+                : new ServiceResponse<UserModel>(null, false, "UserModel is not found");
         }
 
-        public override Task<ServiceResponse<UserModel>> UpdateEntity(UserModel entity)
+        public override async ValueTask<ServiceResponse<UserModel>> UpdateEntity(UserModel entity)
         {
-            throw new NotImplementedException();
+            if(entity is null)
+                return await Task.FromResult(new ServiceResponse<UserModel>(entity, false, "UserModel is null"));
+
+            return new ServiceResponse<UserModel>(await EntityToUpdate(entity), true, "UserModel is updated successfully");
+        }
+
+        protected sealed override async ValueTask<UserModel> EntityToUpdate(UserModel entity)
+        {
+            var entityToUpdate = await dbContext.Users.FindAsync(entity.Id);
+
+            entityToUpdate.Name = entity.Name;
+            entityToUpdate.Email = entity.Email;
+            entityToUpdate.Phone = entity.Phone;
+
+            return await Task.FromResult(entityToUpdate);
         }
     }
 }

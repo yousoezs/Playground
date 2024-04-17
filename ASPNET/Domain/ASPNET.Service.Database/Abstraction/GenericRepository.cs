@@ -10,10 +10,11 @@ namespace ASPNET.Service.Database.Abstraction
     {
         protected TContext dbContext;
         public GenericRepository(TContext dbContext) => this.dbContext = dbContext;
-        public abstract Task<ServiceResponse<TEntity>> AddEntity(TEntity entity);
-        public abstract Task<ServiceResponse<TEntity>> DeleteEntity(TId id);
-        public abstract Task<ServiceResponse<IEnumerable<TEntity>>> GetAllEntities();
-        public abstract Task<ServiceResponse<TEntity>> GetEntity(TId id);
-        public abstract Task<ServiceResponse<TEntity>> UpdateEntity(TEntity entity);
+        public abstract ValueTask<ServiceResponse<TEntity>> AddEntity(TEntity entity);
+        public abstract ValueTask<ServiceResponse<TEntity>> DeleteEntity(TId id);
+        public abstract ValueTask<ServiceResponse<IEnumerable<TEntity>>> GetAllEntities();
+        public abstract ValueTask<ServiceResponse<TEntity>> GetEntity(TId id);
+        public abstract ValueTask<ServiceResponse<TEntity>> UpdateEntity(TEntity entity);
+        protected abstract ValueTask<TEntity> EntityToUpdate(TEntity entity);
     }
 }

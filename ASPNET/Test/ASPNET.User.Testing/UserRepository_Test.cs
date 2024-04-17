@@ -47,6 +47,7 @@ namespace ASPNET.User.Testing
                 //dbContext.Users.Add(newUser);
                 await dbContext.SaveChangesAsync();
             }
+
             // Assert
             Assert.Contains(newUser, dbContext.Users);
             Assert.True(response.IsSuccess);
@@ -63,6 +64,7 @@ namespace ASPNET.User.Testing
             {
                 await dbContext.SaveChangesAsync();
             }
+
             // Assert
             Assert.DoesNotContain(response.Data, dbContext.Users);
             Assert.True(response.IsSuccess);
@@ -76,9 +78,33 @@ namespace ASPNET.User.Testing
             
             // Act
             ServiceResponse<IEnumerable<UserModel>> response = await _instance._userRepository.GetAllEntities();
+
             // Assert
             Assert.Equal(dbContext.Users.Count(), response.Data.Count());
             Assert.True(response.IsSuccess);
+        }
+
+        [Fact]
+        public async Task UserAPI_UserRepository_GetEntity_Test()
+        {
+            // Arrange
+            UserContext dbContext = await CreateShopContextWithInMemoryDbAsync();
+            Guid id = dbContext.Users.First().Id;
+
+            // Act
+            ServiceResponse<UserModel> response = await _instance._userRepository.GetEntity(id);
+
+            // Assert
+            Assert.Equal(dbContext.Users.First(), response.Data);
+        }
+
+        [Fact]
+        public async Task UserAPI_UserRepository_UpdateEntity_Test()
+        {
+            // Arrange
+            UserContext dbContext = await CreateShopContextWithInMemoryDbAsync();
+            UserModel user = dbContext.Users.First();
+
         }
     }
 }

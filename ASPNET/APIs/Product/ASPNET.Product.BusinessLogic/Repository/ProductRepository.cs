@@ -11,27 +11,32 @@ namespace ASPNET.Product.BusinessLogic.Repository
         {
         }
 
-        public override Task<ServiceResponse<ProductModel>> AddEntity(ProductModel entity)
+        public override ValueTask<ServiceResponse<ProductModel>> AddEntity(ProductModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<ServiceResponse<ProductModel>> DeleteEntity(Guid id)
+        public override ValueTask<ServiceResponse<ProductModel>> DeleteEntity(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<ServiceResponse<IEnumerable<ProductModel>>> GetAllEntities()
+        public override ValueTask<ServiceResponse<IEnumerable<ProductModel>>> GetAllEntities()
         {
             throw new NotImplementedException();
         }
 
-        public override Task<ServiceResponse<ProductModel>> GetEntity(Guid id)
+        public override ValueTask<ServiceResponse<ProductModel>> GetEntity(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public override Task<ServiceResponse<ProductModel>> UpdateEntity(ProductModel entity)
+        public override ValueTask<ServiceResponse<ProductModel>> UpdateEntity(ProductModel entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected sealed override ValueTask<ProductModel> EntityToUpdate(ProductModel entity)
         {
             throw new NotImplementedException();
         }
