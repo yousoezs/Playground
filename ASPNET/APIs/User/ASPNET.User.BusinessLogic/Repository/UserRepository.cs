@@ -2,6 +2,7 @@
 using ASPNET.Service.Database.Abstraction;
 using ASPNET.User.DataAccess.Context;
 using ASPNET.User.DataAccess.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace ASPNET.User.BusinessLogic.Repository
 {
@@ -35,9 +36,9 @@ namespace ASPNET.User.BusinessLogic.Repository
             return new ServiceResponse<UserModel>(entity, true, "UserModel is deleted successfully");
         }
 
-        public override Task<ServiceResponse<IEnumerable<UserModel>>> GetAllEntities()
+        public override async Task<ServiceResponse<IEnumerable<UserModel>>> GetAllEntities()
         {
-            throw new NotImplementedException();
+            return new ServiceResponse<IEnumerable<UserModel>>(await dbContext.Users.ToListAsync(), true, "UserModels are fetched successfully");
         }
 
         public override Task<ServiceResponse<UserModel>> GetEntity(Guid id)

@@ -67,5 +67,18 @@ namespace ASPNET.User.Testing
             Assert.DoesNotContain(response.Data, dbContext.Users);
             Assert.True(response.IsSuccess);
         }
+
+        [Fact]
+        public async Task UserAPI_UserRepository_GetAllEntities_Test()
+        {
+            // Arrange
+            UserContext dbContext = await CreateShopContextWithInMemoryDbAsync();
+            
+            // Act
+            ServiceResponse<IEnumerable<UserModel>> response = await _instance._userRepository.GetAllEntities();
+            // Assert
+            Assert.Equal(dbContext.Users.Count(), response.Data.Count());
+            Assert.True(response.IsSuccess);
+        }
     }
 }
