@@ -1,4 +1,7 @@
+using ASPNET.Domain.Commons.Interface;
+using ASPNET.User.BusinessLogic.Repository;
 using ASPNET.User.DataAccess.Context;
+using ASPNET.User.DataAccess.Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +20,8 @@ builder.Services.AddSqlServer<UserContext>(connectionString);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<IGenericRepository<UserModel, Guid>, UserRepository>();
 
 var app = builder.Build();
 

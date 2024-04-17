@@ -5,11 +5,13 @@ using ASPNET.User.DataAccess.Context;
 using ASPNET.User.DataAccess.Model;
 using Microsoft.EntityFrameworkCore;
 
+using FakeItEasy;
+
 namespace ASPNET.User.Testing
 {
     public class UserRepository_Test
     {
-        private static UserRepository_Test _instance;
+        private static UserRepository_Test _instance = new();
         private IGenericRepository<UserModel, Guid> _userRepository;
         private static async Task<UserContext> CreateShopContextWithInMemoryDbAsync()
         {
@@ -36,22 +38,34 @@ namespace ASPNET.User.Testing
         {
             // Arrange
             UserContext dbContext = await CreateShopContextWithInMemoryDbAsync();
-            var newUser = new UserModel() { Id = Guid.NewGuid(), Name = "Gegosh", Email = "Gegosh@gegosh.com", Phone = "070 070 05 05" };
+            UserModel newUser = new UserModel() { Id = Guid.NewGuid(), Name = "Gegosh", Email = "Gegosh@gegosh.com", Phone = "070 070 05 05" };
+         
+            // Act
+            ServiceResponse<UserModel> response = await _instance._userRepository.AddEntity(newUser);
+            if (response.IsSuccess)
+            {
+                //dbContext.Users.Add(newUser);
+                await dbContext.SaveChangesAsync();
+            }
+            // Assert
+            Assert.Contains(newUser, dbContext.Users);
+            Assert.True(response.IsSuccess);
+        }
+        [Fact]
+        public async Task UserAPI_UserRepository_DeleteEntity_Test()
+        {
+            // Arrange
+            UserContext dbContext = await CreateShopContextWithInMemoryDbAsync();
             
             // Act
-            ServiceResponse<UserModel> response = await _userRepository.AddEntity(newUser);
-            
+            ServiceResponse<UserModel> response = await _instance._userRepository.DeleteEntity(dbContext.Users.First().Id);
+            if (response.IsSuccess)
+            {
+                await dbContext.SaveChangesAsync();
+            }
             // Assert
-            if(response.IsSuccess)
-            {
-                Assert.Contains(newUser, dbContext.Users);
-                Assert.True(response.IsSuccess);
-            }
-            else
-            {
-                Assert.False(response.IsSuccess);
-                Assert.Fail(response.Message);
-            }
+            Assert.DoesNotContain(response.Data, dbContext.Users);
+            Assert.True(response.IsSuccess);
         }
     }
 }

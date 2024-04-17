@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ASPNET.User.BusinessLogic\ASPNET.User.BusinessLogic.csproj" />
     <ProjectReference Include="..\ASPNET.User.DataAccess\ASPNET.User.DataAccess.csproj" />
   </ItemGroup>
 

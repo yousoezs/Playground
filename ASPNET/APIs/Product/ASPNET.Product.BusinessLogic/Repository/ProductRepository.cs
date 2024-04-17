@@ -1,5 +1,4 @@
-﻿using ASPNET.Domain.Commons.Abstraction;
-using ASPNET.Domain.Commons.Record;
+﻿using ASPNET.Domain.Commons.Record;
 using ASPNET.Product.DataAccess.Context;
 using ASPNET.Product.DataAccess.Model;
 using ASPNET.Service.Database.Abstraction;

@@ -73,7 +73,7 @@ services:
 
   aspnet.order.db:
     container_name: orderdb
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: mcr.microsoft.com/mssql/server:2022-latest
     networks:
       - orderNetwork
     ports:
@@ -85,15 +85,19 @@ services:
 
   aspnet.product.db:
     container_name: productdb
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: mcr.microsoft.com/mssql/server:2022-latest
     networks:
       - productNetwork
     ports:
-      - "7002:27017"
+      - "7002:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Pwd123!!1
+      - MSSQL_PID=Developer
 
   aspnet.user.db:
     container_name: userdb
-    image: mcr.microsoft.com/mssql/server:2019-latest
+    image: mcr.microsoft.com/mssql/server:2022-latest
     networks:
       - userNetwork
     ports:
