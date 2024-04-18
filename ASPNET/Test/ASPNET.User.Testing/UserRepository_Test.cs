@@ -113,7 +113,6 @@ namespace ASPNET.User.Testing
             var response = await _instance._userRepository.UpdateEntity(user);
             if(response.IsSuccess)
             {
-                dbContext.Update(user);
                 await dbContext.SaveChangesAsync();
             }
 
