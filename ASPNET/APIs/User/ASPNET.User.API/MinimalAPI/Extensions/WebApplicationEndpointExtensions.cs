@@ -1,4 +1,5 @@
 ﻿using ASPNET.User.API.MinimalAPI.Extensions.EndpointsGrouped;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ASPNET.User.API.MinimalAPI.Extensions
 {
@@ -6,7 +7,9 @@ namespace ASPNET.User.API.MinimalAPI.Extensions
     {
         public static WebApplication MapEndpoints(this WebApplication app)
         {
-            app.MapGroup("/users").MapUserGroup().WithTags("Users");
+            app.MapGroup("/api/user").MapUserGroup().WithTags("Users");
+
+            return app;
         }
     }
 }

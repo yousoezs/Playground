@@ -6,11 +6,11 @@ namespace ASPNET.User.API.MinimalAPI.Extensions.EndpointsGrouped
     {
         public static RouteGroupBuilder MapUserGroup(this RouteGroupBuilder builder)
         {
-            builder.MediateGet<GetAllUsersRequest>("/all");
-            builder.MediateGet<GetUserByIdRequest>("/{id}");
-            builder.MediatePost<AddUserRequest>("/");
-            builder.MediatePut<UpdateUserRequest>("/");
-            builder.MediateDelete<DeleteUserRequest>("/{id}");
+            builder.MediateGet<GetAllUsersRequest>("/getAll");
+            builder.MediateGet<GetUserByIdRequest>("/getById/{id}");
+            builder.MediatePost<AddUserRequest>("/add");
+            builder.MediatePut<UpdateUserRequest>("/update");
+            builder.MediateDelete<DeleteUserRequest>("/delete/{id}");
 
             return builder;
         }

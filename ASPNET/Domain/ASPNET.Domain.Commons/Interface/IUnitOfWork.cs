@@ -11,5 +11,7 @@ namespace ASPNET.Domain.Commons.Interface
         IEntity<TId>, 
         IDisposable
     {
+        TRepository Repository { get; }
+        ValueTask SaveAsync();
     }
 }

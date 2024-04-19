@@ -10,7 +10,7 @@ namespace ASPNET.User.BusinessLogic.Extensions
 {
     public static class UserExtensions
     {
-        public static UserModel ConvertToModel(UserDto userDto)
+        public static UserModel ConvertToModel(this UserDto userDto)
         {
             return new UserModel()
             {
@@ -20,7 +20,7 @@ namespace ASPNET.User.BusinessLogic.Extensions
                 Phone = userDto.Phone
             };
         }
-        public static UserDto ConvertToDto(UserModel userModel)
+        public static UserDto ConvertToDto(this UserModel userModel)
         {
             return new UserDto()
             {

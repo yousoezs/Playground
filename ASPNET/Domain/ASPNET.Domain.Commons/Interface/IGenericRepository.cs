@@ -9,5 +9,6 @@ namespace ASPNET.Domain.Commons.Interface
         ValueTask<ServiceResponse<TEntity>> DeleteEntity(TId id);
         ValueTask<ServiceResponse<TEntity>> GetEntity(TId id);
         ValueTask<ServiceResponse<IEnumerable<TEntity>>> GetAllEntities();
+        ValueTask SaveAsync();
     }
 }

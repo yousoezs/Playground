@@ -5,9 +5,9 @@ using ASPNET.Service.Database.Abstraction;
 
 namespace ASPNET.Product.BusinessLogic.Repository
 {
-    public class ProductRepository : GenericRepository<ProductContext, ProductModel, Guid>
+    public class ProductRepository : GenericRepository<ProductModel, Guid>
     {
-        public ProductRepository(ProductContext dbContext) : base(dbContext)
+        public ProductRepository(ProductContext dbContext)
         {
         }
 
@@ -27,6 +27,11 @@ namespace ASPNET.Product.BusinessLogic.Repository
         }
 
         public override ValueTask<ServiceResponse<ProductModel>> GetEntity(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ValueTask SaveAsync()
         {
             throw new NotImplementedException();
         }

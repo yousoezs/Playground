@@ -13,19 +13,19 @@ namespace ASPNET.User.API.MinimalAPI.Extensions
         }
         public static RouteGroupBuilder MediatePost<TRequest>(this RouteGroupBuilder builder, string pattern) where TRequest : IHttpRequest
         {
-            builder.MapGet(pattern, async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request));
+            builder.MapPost(pattern, async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request));
 
             return builder;
         }
         public static RouteGroupBuilder MediateDelete<TRequest>(this RouteGroupBuilder builder, string pattern) where TRequest : IHttpRequest
         {
-            builder.MapGet(pattern, async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request));
+            builder.MapDelete(pattern, async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request));
 
             return builder;
         }
         public static RouteGroupBuilder MediatePut<TRequest>(this RouteGroupBuilder builder, string pattern) where TRequest : IHttpRequest
         {
-            builder.MapGet(pattern, async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request));
+            builder.MapPut(pattern, async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request));
 
             return builder;
         }

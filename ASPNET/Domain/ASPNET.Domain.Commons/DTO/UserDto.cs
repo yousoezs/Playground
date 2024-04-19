@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ASPNET.Domain.Commons.DTO
 {
-    public class UserDto : ICustomer
+    public class UserDto
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string? Name { get; set; } = string.Empty;

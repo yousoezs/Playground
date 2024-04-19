@@ -1,7 +1,10 @@
-﻿namespace ASPNET.User.API.MinimalAPI.Endpoints.Request.User
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace ASPNET.User.API.MinimalAPI.Endpoints.Request.User
 {
     public class GetUserByIdRequest : IHttpRequest
     {
-        public Guid Id { get; set; }
+        [FromBody]
+        public string Id { get; set; }
     }
 }

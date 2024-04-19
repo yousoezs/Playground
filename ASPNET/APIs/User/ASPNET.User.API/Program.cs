@@ -1,8 +1,7 @@
-using ASPNET.Domain.Commons.Interface;
 using ASPNET.User.API.MinimalAPI.Extensions;
 using ASPNET.User.BusinessLogic.Repository;
 using ASPNET.User.DataAccess.Context;
-using ASPNET.User.DataAccess.Model;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,10 +9,11 @@ var host = Environment.GetEnvironmentVariable("DB_HOST_USER");
 var database = Environment.GetEnvironmentVariable("DB_DATABASE_USER");
 var username = Environment.GetEnvironmentVariable("DB_USER_USER");
 var password = Environment.GetEnvironmentVariable("DB_MSSQL_SA_PASSWORD_USER");
+Console.WriteLine($"Host is: {host}");
+Console.WriteLine($"Database is: {database}");
+Console.WriteLine($"Username is: {username}");
+Console.WriteLine($"Password is: {password}");
 var connectionString = $"Data Source={host};Initial Catalog={database};User ID={username};Password={password};Trusted_connection=false;TrustServerCertificate=True;";
-
-//builder.Services.AddHttpClient("graphiteapi.user.api", c => c.BaseAddress = new System.Uri("http://graphiteapi.user.api:8080"));
-//builder.Services.AddHttpClient("graphiteapi.product.api", c => c.BaseAddress = new System.Uri("http://graphiteapi.pencil.api:8080"));
 
 builder.Services.AddSqlServer<UserContext>(connectionString);
 
@@ -22,7 +22,7 @@ builder.Services.AddSqlServer<UserContext>(connectionString);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IGenericRepository<UserModel, Guid>, UserRepository>();
+builder.Services.AddScoped<UserRepository>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 

@@ -6,66 +6,74 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ASPNET.User.BusinessLogic.Repository
 {
-    public class UserRepository : GenericRepository<UserContext, UserModel, Guid>
+    public class UserRepository : GenericRepository<UserModel, Guid>
     {
-        public UserRepository(UserContext dbContext) : base(dbContext) {}
+        private readonly UserContext _dbContext;
+        public UserRepository(UserContext dbContext) 
+        {
+            _dbContext = dbContext;
+        }
 
-        public override async ValueTask<ServiceResponse<UserModel>> AddEntity(UserModel entity)
+        public sealed override async ValueTask<ServiceResponse<UserModel>> AddEntity(UserModel entity)
         {
             if(entity is null)
                 return await Task.FromResult(new ServiceResponse<UserModel>(entity, false, "UserModel is null"));
 
-            await dbContext.Users.AddAsync(entity);
+            await _dbContext.Users.AddAsync(entity);
 
             return await Task.FromResult(new ServiceResponse<UserModel>(entity, true, "UserModel is added successfully"));
         }
 
-        public override async ValueTask<ServiceResponse<UserModel>> DeleteEntity(Guid id)
+        public sealed override async ValueTask<ServiceResponse<UserModel>> DeleteEntity(Guid id)
         {
            if(id.Equals(Guid.Empty))
                 return await Task.FromResult(new ServiceResponse<UserModel>(null, false, "Id is empty"));
 
-            UserModel entity = await dbContext.Users.FindAsync(id);
+            UserModel entity = await _dbContext.Users.FindAsync(id);
 
             if(entity is null)
                 return await Task.FromResult( new ServiceResponse<UserModel>(null, false, "UserModel is not found"));
 
-            dbContext.Users.Remove(entity);
+            _dbContext.Users.Remove(entity);
 
             return await Task.FromResult(new ServiceResponse<UserModel>(entity, true, "UserModel is deleted successfully"));
         }
 
-        public override async ValueTask<ServiceResponse<IEnumerable<UserModel>>> GetAllEntities()
+        public sealed override async ValueTask<ServiceResponse<IEnumerable<UserModel>>> GetAllEntities()
         {
-            return await Task.FromResult(new ServiceResponse<IEnumerable<UserModel>>(await dbContext.Users.ToListAsync(), true, "UserModels are fetched successfully"));
+            return await Task.FromResult(new ServiceResponse<IEnumerable<UserModel>>(await _dbContext.Users.ToListAsync(), true, "UserModels are fetched successfully"));
         }
 
-        public override async ValueTask<ServiceResponse<UserModel>> GetEntity(Guid id)
+        public sealed override async ValueTask<ServiceResponse<UserModel>> GetEntity(Guid id)
         {
-            return await dbContext.Users.FindAsync(id) is UserModel entity
+            return await _dbContext.Users.FindAsync(id) is UserModel entity
                 ? await Task.FromResult(new ServiceResponse<UserModel>(entity, true, "UserModel is fetched successfully"))
                 : await Task.FromResult(new ServiceResponse<UserModel>(null, false, "UserModel is not found"));
         }
 
-        public override async ValueTask<ServiceResponse<UserModel>> UpdateEntity(UserModel entity)
+        public sealed override async ValueTask<ServiceResponse<UserModel>> UpdateEntity(UserModel entity)
         {
             if(entity is null)
                 return await Task.FromResult(new ServiceResponse<UserModel>(entity, false, "UserModel is null"));
 
-            dbContext.Users.Update(await EntityToUpdate(entity));
+            _dbContext.Users.Update(await EntityToUpdate(entity));
 
             return await Task.FromResult(new ServiceResponse<UserModel>(entity, true, "UserModel is updated successfully"));
         }
 
         protected sealed override async ValueTask<UserModel> EntityToUpdate(UserModel entity)
         {
-            var entityToUpdate = await dbContext.Users.FindAsync(entity.Id);
+            var entityToUpdate = await _dbContext.Users.FindAsync(entity.Id);
 
             entityToUpdate.Name = entity.Name;
             entityToUpdate.Email = entity.Email;
             entityToUpdate.Phone = entity.Phone;
 
             return await Task.FromResult(entityToUpdate);
+        }
+        public sealed override async ValueTask SaveAsync()
+        {
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
