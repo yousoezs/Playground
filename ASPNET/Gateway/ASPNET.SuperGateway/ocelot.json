@@ -167,7 +167,7 @@
       ],
       "DownstreamHttpMethod": null,
       "DownstreamHttpVersion": null,
-      "DownstreamPathTemplate": "/api/user/{id}",
+      "DownstreamPathTemplate": "/api/user/getById/{id}",
       "DownstreamScheme": "http",
       "FileCacheOptions": {
         "TtlSeconds": 0,
