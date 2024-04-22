@@ -4,6 +4,6 @@ namespace ASPNET.User.API.MinimalAPI.Endpoints.Request.User
 {
     public class AddUserRequest : IHttpRequest
     {
-        public UserDto? User { get; set; }
+        public required UserDto User { get; set; }
     }
 }

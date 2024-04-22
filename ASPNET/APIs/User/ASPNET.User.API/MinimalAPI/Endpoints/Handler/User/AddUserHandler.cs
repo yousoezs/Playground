@@ -4,6 +4,7 @@ using ASPNET.User.BusinessLogic.Extensions;
 using ASPNET.User.BusinessLogic.Repository;
 using ASPNET.User.DataAccess.Model;
 using MediatR;
+using System.Text.Json;
 
 namespace ASPNET.User.API.MinimalAPI.Endpoints.Handler.User
 {
@@ -23,15 +24,13 @@ namespace ASPNET.User.API.MinimalAPI.Endpoints.Handler.User
             if(request.User.Id.Equals(Guid.Empty))
                 return Results.NotFound("Id is empty");
 
-            UserModel userModel = request.User.ConvertToModel();
-
-            var response = await _repository.AddEntity(userModel);
+            var response = await _repository.AddEntity(request.User.ConvertToModel());
             if(!response.IsSuccess)
                 return Results.NotFound(response.Message);
             
             await _repository.SaveAsync();
 
-            return Results.Ok(response.Data.ConvertToDto);
+            return Results.Ok(response.Message);
         }
     }
 }

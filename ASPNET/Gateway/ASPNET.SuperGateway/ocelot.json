@@ -94,7 +94,7 @@
       ],
       "DownstreamHttpMethod": null,
       "DownstreamHttpVersion": null,
-      "DownstreamPathTemplate": "/api/user/all",
+      "DownstreamPathTemplate": "/api/user/getAll",
       "DownstreamScheme": "http",
       "FileCacheOptions": {
         "TtlSeconds": 0,

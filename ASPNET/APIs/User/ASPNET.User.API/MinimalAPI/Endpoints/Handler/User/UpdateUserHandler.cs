@@ -18,6 +18,7 @@ namespace ASPNET.User.API.MinimalAPI.Endpoints.Handler.User
 
         public async Task<IResult> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
         {
+            Console.WriteLine($"UserDto: {request}");
             if(request.User is null)
                 return Results.NotFound("User is null");
 
@@ -26,7 +27,7 @@ namespace ASPNET.User.API.MinimalAPI.Endpoints.Handler.User
                 return Results.NotFound(response.Message);
 
             await _repository.SaveAsync();
-            return Results.Ok(response.Data.ConvertToDto);
+            return Results.Ok(response.Message);
         }
     }
 }

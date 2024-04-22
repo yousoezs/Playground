@@ -1,3 +1,4 @@
+using ASPNET.User.API.MinimalAPI.Endpoints.Handler.User;
 using ASPNET.User.API.MinimalAPI.Extensions;
 using ASPNET.User.BusinessLogic.Repository;
 using ASPNET.User.DataAccess.Context;
@@ -9,10 +10,7 @@ var host = Environment.GetEnvironmentVariable("DB_HOST_USER");
 var database = Environment.GetEnvironmentVariable("DB_DATABASE_USER");
 var username = Environment.GetEnvironmentVariable("DB_USER_USER");
 var password = Environment.GetEnvironmentVariable("DB_MSSQL_SA_PASSWORD_USER");
-Console.WriteLine($"Host is: {host}");
-Console.WriteLine($"Database is: {database}");
-Console.WriteLine($"Username is: {username}");
-Console.WriteLine($"Password is: {password}");
+
 var connectionString = $"Data Source={host};Initial Catalog={database};User ID={username};Password={password};Trusted_connection=false;TrustServerCertificate=True;";
 
 builder.Services.AddSqlServer<UserContext>(connectionString);
@@ -25,6 +23,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<UserRepository>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+builder.Services.AddControllersWithViews();
+
 
 var app = builder.Build();
 

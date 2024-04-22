@@ -25,7 +25,7 @@ namespace ASPNET.User.API.MinimalAPI.Endpoints.Handler.User
             if(!response.IsSuccess)
                 return Results.NotFound(response.Message);
             
-            return Results.Ok(response.Data.ConvertToDto);
+            return Results.Ok(response.Message);
         }
     }
 }

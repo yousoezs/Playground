@@ -36,7 +36,7 @@
           "Port": 8080
         }
       ],
-      "DownstreamPathTemplate": "/api/user/{id}"
+      "DownstreamPathTemplate": "/api/user/getById/{id}"
     },
 
     {
