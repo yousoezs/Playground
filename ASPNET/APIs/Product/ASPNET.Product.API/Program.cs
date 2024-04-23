@@ -1,3 +1,4 @@
+using ASPNET.Product.API.MinimalAPI.Extensions;
 using ASPNET.Product.DataAccess.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,5 +31,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapEndpoints();
 
 app.Run();

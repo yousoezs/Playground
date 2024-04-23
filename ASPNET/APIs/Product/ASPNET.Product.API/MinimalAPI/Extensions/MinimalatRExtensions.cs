@@ -1,7 +1,7 @@
 ﻿using ASPNET.Product.API.MinimalAPI.Endpoints;
 using MediatR;
 
-namespace ASPNET.Product.API.MinimalAPI.Extensions.EndpointsGrouped
+namespace ASPNET.Product.API.MinimalAPI.Extensions
 {
     public static class MinimalatRExtensions
     {
