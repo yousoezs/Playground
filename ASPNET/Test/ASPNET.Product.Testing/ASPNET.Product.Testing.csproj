@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <PackageReference Include="FakeItEasy" Version="8.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0-preview.3.24172.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0-preview.3.24172.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
@@ -28,8 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\APIs\Product\ASPNET.Product.BusinessLogic\ASPNET.Product.BusinessLogic.csproj" />
     <ProjectReference Include="..\..\APIs\Product\ASPNET.Product.DataAccess\ASPNET.Product.DataAccess.csproj" />
-    <ProjectReference Include="..\..\APIs\User\ASPNET.User.BusinessLogic\ASPNET.User.BusinessLogic.csproj" />
-    <ProjectReference Include="..\..\APIs\User\ASPNET.User.DataAccess\ASPNET.User.DataAccess.csproj" />
+    <ProjectReference Include="..\..\Domain\ASPNET.Domain.Commons\ASPNET.Domain.Commons.csproj" />
   </ItemGroup>
 
 </Project>

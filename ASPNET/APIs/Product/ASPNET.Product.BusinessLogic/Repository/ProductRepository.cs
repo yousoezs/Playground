@@ -7,36 +7,43 @@ namespace ASPNET.Product.BusinessLogic.Repository
 {
     public class ProductRepository : GenericRepository<ProductModel, Guid>
     {
+        private readonly ProductContext _dbContext;
         public ProductRepository(ProductContext dbContext)
         {
+            _dbContext = dbContext;
         }
 
-        public override ValueTask<ServiceResponse<ProductModel>> AddEntity(ProductModel entity)
+        public sealed override async ValueTask<ServiceResponse<ProductModel>> AddEntity(ProductModel entity)
+        {
+            if(entity is null)
+                return await Task.FromResult(new ServiceResponse<ProductModel>(null, false, "Entity is null"));
+
+
+
+            return await Task.FromResult(new ServiceResponse<ProductModel>(entity, true, "Entity added"));
+        }
+
+        public sealed override ValueTask<ServiceResponse<ProductModel>> DeleteEntity(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public override ValueTask<ServiceResponse<ProductModel>> DeleteEntity(Guid id)
+        public sealed override ValueTask<ServiceResponse<IEnumerable<ProductModel>>> GetAllEntities()
         {
             throw new NotImplementedException();
         }
 
-        public override ValueTask<ServiceResponse<IEnumerable<ProductModel>>> GetAllEntities()
+        public sealed override ValueTask<ServiceResponse<ProductModel>> GetEntity(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public override ValueTask<ServiceResponse<ProductModel>> GetEntity(Guid id)
+        public sealed override ValueTask SaveAsync()
         {
             throw new NotImplementedException();
         }
 
-        public override ValueTask SaveAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override ValueTask<ServiceResponse<ProductModel>> UpdateEntity(ProductModel entity)
+        public sealed override ValueTask<ServiceResponse<ProductModel>> UpdateEntity(ProductModel entity)
         {
             throw new NotImplementedException();
         }
