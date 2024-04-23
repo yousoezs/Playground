@@ -23,9 +23,14 @@ namespace ASPNET.Product.BusinessLogic.Repository
             return await Task.FromResult(new ServiceResponse<ProductModel>(entity, true, "Entity added"));
         }
 
-        public sealed override ValueTask<ServiceResponse<ProductModel>> DeleteEntity(Guid id)
+        public sealed override async ValueTask<ServiceResponse<ProductModel>> DeleteEntity(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = await _dbContext.Products.FindAsync(id);
+            if(entity is null)
+                return await Task.FromResult(new ServiceResponse<ProductModel>(null, false, "Id is empty"));
+
+            _dbContext.Products.Remove(entity);
+            return await Task.FromResult(new ServiceResponse<ProductModel>(entity, true, "Entity removed"));
         }
 
         public sealed override ValueTask<ServiceResponse<IEnumerable<ProductModel>>> GetAllEntities()

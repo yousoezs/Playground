@@ -59,8 +59,11 @@ namespace ASPNET.Product.Testing
             var context = await CreateShopContextWithInMemoryDbAsync();
             var product = context.Products.First();
             // Act
-            context.Remove(product);
-            await context.SaveChangesAsync();
+            var response = await _instance._userRepository.DeleteEntity(product.Id);
+            if(response.IsSuccess)
+            {
+                await context.SaveChangesAsync();
+            }
 
             // Assert
             Assert.True(!context.Products.Contains(product));
