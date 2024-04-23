@@ -33,32 +33,45 @@ namespace ASPNET.Product.BusinessLogic.Repository
             return await Task.FromResult(new ServiceResponse<ProductModel>(entity, true, "Entity removed"));
         }
 
-        public sealed override ValueTask<ServiceResponse<IEnumerable<ProductModel>>> GetAllEntities()
+        public sealed override async ValueTask<ServiceResponse<IEnumerable<ProductModel>>> GetAllEntities()
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(new ServiceResponse<IEnumerable<ProductModel>>(_dbContext.Products, true, "Entities returned"));
         }
 
-        public sealed override ValueTask<ServiceResponse<ProductModel>> GetEntity(Guid id)
+        public sealed override async ValueTask<ServiceResponse<ProductModel>> GetEntity(Guid id)
         {
-            throw new NotImplementedException();
+            var entityToReturn = await _dbContext.Products.FindAsync(id);
+            if(entityToReturn is null)
+                return await Task.FromResult(new ServiceResponse<ProductModel>(null, false, "Id is empty"));
+
+            return await Task.FromResult(new ServiceResponse<ProductModel>(entityToReturn, true, "Entity returned"));
         }
 
-        public sealed override ValueTask SaveAsync()
-        {
-            throw new NotImplementedException();
-        }
 
         public sealed override async ValueTask<ServiceResponse<ProductModel>> UpdateEntity(ProductModel entity)
         {
             if(entity is null)
                 return await Task.FromResult(new ServiceResponse<ProductModel>(null, false, "Entity is null"));
 
+            _dbContext.Products.Update(await EntityToUpdate(entity));
+
             return await Task.FromResult(new ServiceResponse<ProductModel>(entity, true, "Entity updated"));
         }
-
-        protected sealed override ValueTask<ProductModel> EntityToUpdate(ProductModel entity)
+        public sealed override async ValueTask SaveAsync()
         {
-            throw new NotImplementedException();
+            await _dbContext.SaveChangesAsync();
+        }
+
+        protected sealed override async ValueTask<ProductModel> EntityToUpdate(ProductModel entity)
+        {
+            var entityToUpdate = _dbContext.Products.Find(entity.Id);
+
+            entityToUpdate.Id = entity.Id;
+            entityToUpdate.Name = entity.Name;
+            entityToUpdate.Description = entity.Description;
+            entityToUpdate.Price = entity.Price;
+
+            return await Task.FromResult(entityToUpdate);
         }
     }
 }

@@ -84,12 +84,38 @@ namespace ASPNET.Product.Testing
             var response = await _instance._userRepository.UpdateEntity(product);
             if(response.IsSuccess)
             {
-                context.Products.Update(product);
                 await context.SaveChangesAsync();
             }
 
             // Assert
             Assert.Same(context.Products.First(), product);
+        }
+
+        [Fact]
+        public async Task ProductRepository_GetAllEntities_Test()
+        {
+            // Arrange
+            var context = await CreateShopContextWithInMemoryDbAsync();
+
+            // Act
+            var response = await _instance._userRepository.GetAllEntities();
+
+            // Assert
+            Assert.Equal(context.Products, response.Data);
+        }
+
+        [Fact]
+        public async Task ProductRepository_GetEntityById_Test()
+        {
+            // Arrange
+            var context = await CreateShopContextWithInMemoryDbAsync();
+            var product = context.Products.First();
+            // Act
+            var response = await _instance._userRepository.GetEntity(product.Id);
+
+            // Assert
+            Assert.Equal(product, response.Data);
+            Assert.True(response.IsSuccess);
         }
     }
 }
