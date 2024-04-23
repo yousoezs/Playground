@@ -48,9 +48,12 @@ namespace ASPNET.Product.BusinessLogic.Repository
             throw new NotImplementedException();
         }
 
-        public sealed override ValueTask<ServiceResponse<ProductModel>> UpdateEntity(ProductModel entity)
+        public sealed override async ValueTask<ServiceResponse<ProductModel>> UpdateEntity(ProductModel entity)
         {
-            throw new NotImplementedException();
+            if(entity is null)
+                return await Task.FromResult(new ServiceResponse<ProductModel>(null, false, "Entity is null"));
+
+            return await Task.FromResult(new ServiceResponse<ProductModel>(entity, true, "Entity updated"));
         }
 
         protected sealed override ValueTask<ProductModel> EntityToUpdate(ProductModel entity)

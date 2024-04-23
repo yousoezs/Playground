@@ -69,5 +69,27 @@ namespace ASPNET.Product.Testing
             Assert.True(!context.Products.Contains(product));
             Assert.Collection(context.Products, p => p.Equals(product));
         }
+        [Fact]
+        public async Task ProductRepository_UpdateEntity_Test()
+        {
+            // Arrange
+            var context = await CreateShopContextWithInMemoryDbAsync();
+            var product = context.Products.First();
+            product.Name = "Test";
+            product.Description = "Test";
+            product.Price = 17;
+
+
+            // Act
+            var response = await _instance._userRepository.UpdateEntity(product);
+            if(response.IsSuccess)
+            {
+                context.Products.Update(product);
+                await context.SaveChangesAsync();
+            }
+
+            // Assert
+            Assert.Same(context.Products.First(), product);
+        }
     }
 }
