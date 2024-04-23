@@ -18,7 +18,7 @@ namespace ASPNET.Product.BusinessLogic.Repository
             if(entity is null)
                 return await Task.FromResult(new ServiceResponse<ProductModel>(null, false, "Entity is null"));
 
-
+            await _dbContext.Products.AddAsync(entity);
 
             return await Task.FromResult(new ServiceResponse<ProductModel>(entity, true, "Entity added"));
         }

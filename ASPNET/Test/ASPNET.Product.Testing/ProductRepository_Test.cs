@@ -45,13 +45,26 @@ namespace ASPNET.Product.Testing
             var response = await _instance._userRepository.AddEntity(product);
             if(response.IsSuccess)
             {
-                await context.Products.AddAsync(product);
                 await context.SaveChangesAsync();
             }
 
             // Assert
             Assert.True(response.IsSuccess);
             Assert.Contains(context.Products, p => p.Name.Equals(product.Name));
+        }
+        [Fact]
+        public async Task ProductRepository_DeleteEnttiy_Test()
+        {
+            // Arrange
+            var context = await CreateShopContextWithInMemoryDbAsync();
+            var product = context.Products.First();
+            // Act
+            context.Remove(product);
+            await context.SaveChangesAsync();
+
+            // Assert
+            Assert.True(!context.Products.Contains(product));
+            Assert.Collection(context.Products, p => p.Equals(product));
         }
     }
 }
